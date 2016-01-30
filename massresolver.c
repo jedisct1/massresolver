@@ -47,7 +47,11 @@ get_one(void)
             continue;
         }
 #else
-        pnt = line;
+        if ((pnt = strchr(line, ' ')) != NULL ||
+            (pnt = strchr(line, '\t')) != NULL) {
+            *pnt = 0;
+        }
+        pnt = line;        
 #endif
         if ((epnt = strrchr(pnt, '\n')) != NULL) {
             *epnt = 0;
