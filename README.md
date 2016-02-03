@@ -28,3 +28,5 @@ the `MAX_RUNNING` macro.
 
 Even with the default number of queries, you may have to adjust the
 maximum number of file descriptors allowed for your session.
+Something like `ulimit -n 100000` might do the job.
+
