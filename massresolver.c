@@ -108,19 +108,21 @@ mycallback(void *mydata, int err, struct ub_result *result)
     }
     if (result->havedata) {
         ldns_buffer  *output;
-        ldns_pkt     *packet;
+        ldns_pkt     *packet = NULL;
         ldns_rdf     *rdf;
         ldns_rr      *answer;
-        ldns_rr_list *answers;
+        ldns_rr_list *answers = NULL;
         uint8_t      *wire_packet = result->answer_packet;
-        size_t        answers_count;
+        size_t        answers_count = 0U;
         size_t        i;
         size_t        wire_packet_len = (size_t) result->answer_len;
         ldns_status   status;
 
         status = ldns_wire2pkt(&packet, wire_packet, wire_packet_len);
-        answers = ldns_pkt_answer(packet);
-        answers_count = ldns_rr_list_rr_count(answers);
+        if (status == LDNS_STATUS_OK) {
+            answers = ldns_pkt_answer(packet);
+            answers_count = ldns_rr_list_rr_count(answers);
+        }
         for (i = (size_t) 0U; i < answers_count; i++) {
             answer = ldns_rr_list_rr(answers, i);
             if (ldns_rr_get_type(answer) != QTYPE) {
