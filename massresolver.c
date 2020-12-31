@@ -179,7 +179,7 @@ main(void)
 #elif defined(USE_LOCALHOST)
     ub_ctx_set_fwd(ctx, "127.0.0.1");
 #else
-    ub_ctx_set_option(ctx, "root-hints:", "/var/unbound/etc/named.cache");
+    ub_ctx_set_option(ctx, "root-hints:", "named.cache");
 #endif
     ub_ctx_set_option(ctx, "num-threads:", "8");
     ub_ctx_set_option(ctx, "outgoing-range:", "8192");
