@@ -3,6 +3,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <assert.h>
+#include <inttypes.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -51,7 +52,7 @@ get_one(void)
             (pnt = strchr(line, '\t')) != NULL) {
             *pnt = 0;
         }
-        pnt = line;        
+        pnt = line;
 #endif
         if ((epnt = strrchr(pnt, '\n')) != NULL) {
             *epnt = 0;
@@ -104,6 +105,7 @@ mycallback(void *mydata, int err, struct ub_result *result)
     (void) mydata;
     if (err != 0) {
         fprintf(stderr, "resolve error: %s\n", ub_strerror(err));
+        ub_resolve_free(result);
         return;
     }
     if (result->havedata) {
